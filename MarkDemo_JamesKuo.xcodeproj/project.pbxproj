@@ -19,6 +19,7 @@
 		6B30CA051DD013DC008EA63E /* HashTagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30CA041DD013DC008EA63E /* HashTagTableViewCell.m */; };
 		6B30CA071DD013FC008EA63E /* HashTagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B30CA061DD013FC008EA63E /* HashTagTableViewCell.xib */; };
 		6B30CA0B1DD01FDD008EA63E /* HashTagHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30CA0A1DD01FDD008EA63E /* HashTagHighlight.m */; };
+		6B30CA111DDA9BDE008EA63E /* JDHashTagModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B30CA101DDA9BDE008EA63E /* JDHashTagModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		6B30CA061DD013FC008EA63E /* HashTagTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HashTagTableViewCell.xib; sourceTree = "<group>"; };
 		6B30CA091DD01FDD008EA63E /* HashTagHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashTagHighlight.h; sourceTree = "<group>"; };
 		6B30CA0A1DD01FDD008EA63E /* HashTagHighlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HashTagHighlight.m; sourceTree = "<group>"; };
+		6B30CA0F1DDA9B5F008EA63E /* JDHashTagModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDHashTagModule.h; sourceTree = "<group>"; };
+		6B30CA101DDA9BDE008EA63E /* JDHashTagModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDHashTagModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,8 +115,7 @@
 		6B30C9CA1DCC2B83008EA63E /* MarkDemo_JamesKuo */ = {
 			isa = PBXGroup;
 			children = (
-				6B30CA0D1DD16B95008EA63E /* TagHighLightModule */,
-				6B30CA081DD01ECF008EA63E /* HashTagModels */,
+				6B30CA0E1DDA9AFE008EA63E /* JDHashTagModule */,
 				6B30C9CE1DCC2B83008EA63E /* AppDelegate.h */,
 				6B30C9CF1DCC2B83008EA63E /* AppDelegate.m */,
 				6B30C9D11DCC2B83008EA63E /* ViewController.h */,
@@ -172,6 +174,17 @@
 				6B30CA0A1DD01FDD008EA63E /* HashTagHighlight.m */,
 			);
 			name = TagHighLightModule;
+			sourceTree = "<group>";
+		};
+		6B30CA0E1DDA9AFE008EA63E /* JDHashTagModule */ = {
+			isa = PBXGroup;
+			children = (
+				6B30CA0D1DD16B95008EA63E /* TagHighLightModule */,
+				6B30CA081DD01ECF008EA63E /* HashTagModels */,
+				6B30CA0F1DDA9B5F008EA63E /* JDHashTagModule.h */,
+				6B30CA101DDA9BDE008EA63E /* JDHashTagModule.m */,
+			);
+			name = JDHashTagModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +325,7 @@
 				6B30CA0B1DD01FDD008EA63E /* HashTagHighlight.m in Sources */,
 				6B30C9D31DCC2B83008EA63E /* ViewController.m in Sources */,
 				6B30C9D01DCC2B83008EA63E /* AppDelegate.m in Sources */,
+				6B30CA111DDA9BDE008EA63E /* JDHashTagModule.m in Sources */,
 				6B30CA021DCC2D45008EA63E /* HashTagModel.m in Sources */,
 				6B30C9CD1DCC2B83008EA63E /* main.m in Sources */,
 			);

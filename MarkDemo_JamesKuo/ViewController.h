@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HashTagModel.h"
-#import "HashTagTableViewCell.h"
-#import "HashTagHighlight.h"
+#import "JDHashTagModule.h"
 
 
-@interface ViewController : UIViewController<UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,HashTagModelDelegate>
 
-
+@interface ViewController:UIViewController
 @end
 

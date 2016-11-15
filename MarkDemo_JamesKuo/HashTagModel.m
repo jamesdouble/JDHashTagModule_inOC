@@ -17,14 +17,9 @@
 @implementation HashTagModel
 {
  NSMutableArray *_dictionaryresultTag;
- NSMutableArray *_SearchTagresult;
- NSArray *_dictionaryTag;
- UITextView *_displayTextView;
  NSArray *_tagstart;
  NSArray *_tagend;
- //id<HashTagModelDelegate> delegate;
-    
- 
+ UITextChecker *_textChecker;
 }
 
 - (instancetype)init
@@ -32,37 +27,25 @@
     NSLog(@"init");
     self = [super init];
     if (self) {
-        
-    }
-    return self;
-}
-
--(instancetype)initWithTextView:(UITextView *)textview
-{
-    self = [super init];
-    if (self) {
-        NSLog(@"HashTagModel initWithTableView");
-        _displayTextView = textview;
-        _dictionaryresultTag =  [NSMutableArray arrayWithObjects:@"", nil];
-        _dictionaryTag =  [NSArray arrayWithObjects:@"#hello",@"#hi",@"#hey", nil];
-        _SearchTagresult = [NSMutableArray arrayWithObjects:@"#", nil];
         _tagstart = [NSArray arrayWithObjects:@"*", nil];
         _tagend = [NSArray arrayWithObjects:@"!",@"@",@"%",@" ", nil];
-
+        _textChecker = [[UITextChecker alloc] init];
+        _dictionaryresultTag = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
+
 -(void)analyzeText:(NSString*)input change:(NSString*)replacestr{
+    [self analyzeTag:input change:replacestr];
+ }
     
+-(void)analyzeTag:(NSString*)input change:(NSString*)replacestr{
     NSString *_input_cp = input;
     NSUInteger _cusor = 0;
     NSUInteger _subStratIndex = 0;
-    [_SearchTagresult removeAllObjects];
-    _SearchTagresult = [NSMutableArray arrayWithObjects:@"#", nil];
-    
     do{
-         /*      找下一個標籤        */
+        /*      找下一個標籤        */
         _cusor += _subStratIndex;
         _input_cp = [_input_cp substringFromIndex:_subStratIndex];
         if([_input_cp containsString:@" #"])
@@ -75,11 +58,10 @@
             NSUInteger _indexofend = 0;
             
             _tagstr = [_input_cp substringFromIndex:(_indexofhash+1)]; //去空白
-            NSLog(@"tagstr %@",_tagstr);
             /*       找尋tag是否含有結尾        */
             NSUInteger _endcharIndex = 999;
             NSString *endchar = @"";
-
+            
             for(int i=0;i<_tagend.count;i+=1)
             {
                 if([_tagstr containsString:[_tagend objectAtIndex:i]])
@@ -95,63 +77,64 @@
                 _indexofend = _endcharIndex;
             }
             
-            _dictionaryresultTag = [NSMutableArray arrayWithObjects:@"", nil];
+            [_dictionaryresultTag removeAllObjects];
+       
             
             if (_hasbeenend) {
                 /* 已結尾 */
-                NSLog(@"indexofend:%d",_indexofend);
-                NSLog(@"target:%@~",endchar);
                 _tagstr = [_tagstr substringToIndex:_indexofend];
-                [_SearchTagresult addObject:_tagstr];
-                _subStratIndex = _indexofhash + _indexofend + 2;
+                if(![endchar  isEqual: @" "])
+                {
+                    _subStratIndex = _indexofhash + _indexofend + 2;
+                }
+                else{
+                    _subStratIndex = _indexofhash + _indexofend + 1;
+                }
             }
             else{
                 /* 未結尾 */
                 if(replacestr.length != 0)
                 {
-                   /*  有選擇Tag  */
-                  NSRange replacerange = NSMakeRange(_cusor + _indexofhash+1,input.length - 1 - (_indexofhash + _cusor));
-                   _replaced = [input stringByReplacingCharactersInRange:replacerange withString:replacestr];
-                  //NSLog(@"replace %@",_replaced);
+                    /*  有選擇Tag  */
+                    NSRange replacerange = NSMakeRange(_cusor + _indexofhash+1,input.length - 1 - (_indexofhash + _cusor));
+                    _replaced = [input stringByReplacingCharactersInRange:replacerange withString:replacestr];
+                    //NSLog(@"replace %@",_replaced);
                 }
                 else{
-                   /* 系統推薦Tag */
-                [self searchTagDictionary:_tagstr];
+                    /* 系統推薦Tag */
+                    [self searchTagDictionary:_tagstr];
                 }
                 return;
             }
         }
         else{
-            NSLog(@"Not Found #");
+            /* Not Found # */
             break;
         }
     }while(1);
     /* 將完成的（需要標明）的Tag傳過去 */
     [self callDelegate];
-   }
-
+}
 
 
 -(void)callDelegate{
     /* 將完成的（需要標明）的Tag傳過去 */
-    [_delegate hasfindHashTag:_SearchTagresult];
+    [_delegate hasfindHashTag];
 }
 
 
-
 -(void)searchTagDictionary:(NSString*)input{
-    _dictionaryresultTag = [NSMutableArray arrayWithObjects:@"", nil];
     /*     搜尋字典     */
-    for(int i=0;i<_dictionaryTag.count;i+=1)
-    {
-        NSString *_comparetag = [_dictionaryTag objectAtIndex:i];
-        /*    配對    */
-        if([_comparetag hasPrefix:input])
-        {
-            [_dictionaryresultTag addObject:_comparetag];
-        }
-    }
+    NSString *_checkingString = [input substringFromIndex:1];
+    NSArray *_checkingArray = [_textChecker completionsForPartialWordRange:NSMakeRange(0, _checkingString.length) inString:_checkingString language:@"en"];
 
+    /*     插入＃      */
+    for(int i =0;i<_checkingArray.count;i+=1)
+    {
+        NSMutableString *_str = [NSMutableString stringWithString:_checkingArray[i]];
+        [_str insertString:@"#" atIndex:0];
+        [_dictionaryresultTag addObject:_str];
+    }
     [self callDelegate];
 }
 

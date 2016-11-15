@@ -11,7 +11,7 @@
 
 @protocol HashTagModelDelegate <NSObject>
 
--(void)hasfindHashTag:(NSArray *)pattern;
+-(void)hasfindHashTag;
 
 @end
 
@@ -21,7 +21,6 @@
 @property id<HashTagModelDelegate> delegate;
 @property NSString *replaced;
 
--(instancetype)initWithTextView:(UITextView *)textview;
 -(void)analyzeText:(NSString*)input change:(NSString*)replacestr;
 -(NSArray*)getResult;
 

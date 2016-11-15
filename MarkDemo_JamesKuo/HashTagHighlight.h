@@ -13,7 +13,6 @@
 
 @interface HashTagHighlight : NSTextStorage
 
-- (void)setHighlightPattern:(NSArray *)input;
 - (void)setString:(NSString*)change;
 
 @end

@@ -19,21 +19,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="INQ-Kg-Cnx">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="hi" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T24-2P-fht">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="INQ-Kg-Cnx">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="20G-FH-LDa"/>
                             <constraint firstItem="T24-2P-fht" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AUe-Tk-A6x"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T24-2P-fht" secondAttribute="bottom" constant="8" symbolic="YES" id="IFJ-Pw-Jpj"/>
-                            <constraint firstItem="INQ-Kg-Cnx" firstAttribute="bottom" secondItem="T24-2P-fht" secondAttribute="top" constant="-8" id="Iwl-GM-bpc"/>
+                            <constraint firstItem="INQ-Kg-Cnx" firstAttribute="bottom" secondItem="T24-2P-fht" secondAttribute="top" constant="-10" id="Iwl-GM-bpc"/>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="JnR-fn-tyf"/>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TbZ-wX-yxn"/>
                             <constraint firstItem="T24-2P-fht" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="a8Y-Ky-lJ9"/>

@@ -11,8 +11,8 @@
 @implementation HashTagHighlight
 {
     NSMutableAttributedString *_backingStore;
-    NSArray *_highlightpattern_arr;
     NSLayoutManager *_layoutmanager;
+    NSMutableArray *_name_arr;
 }
 
 - (instancetype)init
@@ -20,7 +20,7 @@
     self = [super init];
     if (self) {
         _backingStore = [NSMutableAttributedString new];
-        _highlightpattern_arr =  [NSMutableArray arrayWithObjects:@"#", nil];
+        _name_arr = [[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -59,14 +59,6 @@
 }
 
 
-
-
-//指定highlight pattern
-- (void)setHighlightPattern:(NSArray *)input{
-    _highlightpattern_arr = input;
-    [self refreshHasgTagColor];
-}
-
 //把Tag標示出來
 -(void)refreshHasgTagColor{
     /* 首先清除之前所有的高亮： */
@@ -76,25 +68,63 @@
      paragaphRange = [self.string paragraphRangeForRange: self.editedRange];
     [self removeAttribute:NSForegroundColorAttributeName range:paragaphRange];
     [self removeAttribute:NSUnderlineStyleAttributeName range:paragaphRange];
+    [self removeAttribute:NSBackgroundColorAttributeName range:paragaphRange];
+    }
+    
+     /*   HighLightTag    */
+    [self highlightTag:paragaphRange];
+    /*   HighLightUser    */
+    [self highlightUser:paragaphRange];
+}
+
+     /*   HighLightTag    */
+-(void)highlightTag:(NSRange)paragaphRange{
+    
+    static NSRegularExpression *expression;
+    NSString *_highlightpattern = @"(\\s#)(\\w)*(\\s|!|%)";
+    /* 其次遍历所有的样式匹配项并高亮它们： */
+    expression = [NSRegularExpression regularExpressionWithPattern:_highlightpattern options:0 error:NULL];
+    [expression enumerateMatchesInString:self.string options:0 range:paragaphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        NSRange _HashRange = NSMakeRange(result.range.location+1, result.range.length-1);
+        [self addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:_HashRange];
+    }];
+}
+
+
+/*   HighLightUser    */
+-(void)highlightUser:(NSRange)paragaphRange{
+    
+    if(![[self string] containsString:@"@"]) 
+    {
+        return;
     }
     
     static NSRegularExpression *expression;
-    NSString *_highlightpattern = @"";
+    NSString *_highlightnamePattern = @"(\\s@)(\\w)*(\\s)";
+    expression = [NSRegularExpression regularExpressionWithPattern:_highlightnamePattern options:0 error:NULL];
     
-    /* 其次遍历所有的样式匹配项并高亮它们： */
-    for (_highlightpattern in _highlightpattern_arr)
+    NSArray *matches = [expression matchesInString:self.string options:0 range:paragaphRange];
+    for (NSTextCheckingResult *match in matches) {
+        NSRange name_range = NSMakeRange(match.range.location+2, match.range.length -3);
+        NSString* _highlighted = [[self string] substringWithRange:name_range];
+        if(![_name_arr containsObject:_highlighted])
+        {
+        [_name_arr addObject:_highlighted];
+        }
+    }
+    
+    NSString* _namepattern = @"";
+    for (_namepattern in _name_arr)
     {
-        expression = [NSRegularExpression regularExpressionWithPattern:_highlightpattern options:0 error:NULL];
-        
+        expression = [NSRegularExpression regularExpressionWithPattern:_namepattern options:0 error:NULL];
         [expression enumerateMatchesInString:self.string options:0 range:paragaphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-            [self addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:result.range];
-            [self addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:result.range];
-            
+             [self addAttribute:NSBackgroundColorAttributeName value:[UIColor colorWithRed:207.0f/255.0f green:226.0f/255.0f blue:243.0f/255.0f alpha:1.0] range:result.range];
         }];
         
     }
-}
 
+   
+}
 
 
 /* 
