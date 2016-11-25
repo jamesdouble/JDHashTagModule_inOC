@@ -14,6 +14,7 @@
     HashTagHighlight *_hashtaghigh;
     UITableView *_tableview;
     UITextView *_textview;
+    
 }
 
 
@@ -36,6 +37,10 @@
 
         _textview.delegate = self;
         _textview.layer.borderWidth = 1.0;
+        _textview.selectable = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+        tap.delegate = self;
+        [_textview addGestureRecognizer:tap];
         
         _tableview.delegate = self;
         _tableview.dataSource = self;
@@ -48,12 +53,19 @@
         _hashtaghigh = [HashTagHighlight new];
         [_hashtaghigh addLayoutManager: self->_textview.layoutManager];
         [_hashtaghigh replaceCharactersInRange:NSMakeRange(0, 0) withString:@"  "];
+        [self setHashTagColor:[UIColor redColor]];
+        
     }
     return self;
 }
 
 -(void)setHashTagColor:(UIColor *)color{
     [_hashtaghigh setTagColor:color];
+}
+
+-(void)setNameTagColor:(UIColor *)color
+{
+    [_hashtaghigh setNameColor:color];
 }
 
 
@@ -78,10 +90,75 @@
  TextView Delegate
  
  **/
-
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    NSLog(@"%s",__FUNCTION__);
+}
 
 - (void)textViewDidChange:(UITextView *)textView{
+    
     [_hashtagmodel analyzeText:_hashtaghigh.string change:@""];
+}
+
+- (void)textTapped:(UITapGestureRecognizer *)recognizer
+{
+    UITextView *textView = _textview;
+    NSMutableArray *hashtagrange = [_hashtaghigh gethashtagrange];
+ 
+    if(hashtagrange.count == 0)
+    {
+        return;
+    }
+   
+    // Location of the tap in text-container coordinates
+    
+    NSLayoutManager *layoutManager = textView.layoutManager;
+    CGPoint location = [recognizer locationInView:textView];
+    location.x -= textView.textContainerInset.left;
+    location.y -= textView.textContainerInset.top;
+    
+    // Find the character that's been tapped on
+    
+    NSUInteger characterIndex = 0;
+    characterIndex = [layoutManager characterIndexForPoint:location
+                                           inTextContainer:textView.textContainer
+                  fractionOfDistanceBetweenInsertionPoints:NULL];
+    if(characterIndex == [_hashtaghigh string].length -1) //其實是點到字外面
+    {
+        return;
+    }
+    
+    [self checkClickTagOrNot:characterIndex arr:hashtagrange];
+   
+}
+
+-(void)checkClickTagOrNot:(NSUInteger)index arr:(NSMutableArray<NSValue*>*)arr
+{
+    for(int i=0;i<arr.count;i+=1)
+    {
+    NSRange _temprange = arr[i].rangeValue;
+    /*   有無點擊到hashtag   */
+    if(index >= _temprange.location && index <= _temprange.location + _temprange.length)
+        {
+            if(_delegate != NULL)
+            {
+               [_delegate hastapHashTag:[[_hashtaghigh string] substringWithRange:_temprange]];
+                break;
+            }
+        }
+    }
+
+}
+
+/**
+ 
+    Gesture Delegate , this make gesture still working when it is editing~
+ 
+ **/
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 

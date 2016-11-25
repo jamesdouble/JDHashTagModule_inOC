@@ -11,9 +11,15 @@
 #import "HashTagTableViewCell.h"
 #import "HashTagHighlight.h"
 
+@protocol JDHashTagModuleDelegate <NSObject>
 
-@interface JDHashTagModule:NSObject<UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,HashTagModelDelegate>
+@optional -(void)hastapHashTag:(NSString*)tag;
 
+@end
+
+@interface JDHashTagModule:NSObject<UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,HashTagModelDelegate,UIGestureRecognizerDelegate>
+
+@property id<JDHashTagModuleDelegate> delegate;
 -(instancetype)initWithTable_Text:(UITableView *)table txt:(UITextView *)textview;
 
 @end

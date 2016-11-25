@@ -11,6 +11,6 @@
 
 
 
-@interface ViewController:UIViewController
+@interface ViewController:UIViewController<JDHashTagModuleDelegate,UIAlertViewDelegate>
 @end
 

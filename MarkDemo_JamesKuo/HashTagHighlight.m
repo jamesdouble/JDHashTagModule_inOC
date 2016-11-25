@@ -13,6 +13,8 @@
     NSMutableAttributedString *_backingStore;
     NSLayoutManager *_layoutmanager;
     NSMutableArray *_name_arr;
+    NSMutableArray<NSValue*> *_hashtagrange;
+    NSMutableArray *_hashtag_arr;
     NSRange _asignrange;
     UIColor *_hashtagcolor;
     UIColor *_nametagcolor;
@@ -34,6 +36,7 @@
     if (self) {
         _backingStore = [NSMutableAttributedString new];
         _name_arr = [[NSMutableArray alloc]init];
+        _hashtagrange = [[NSMutableArray alloc] init];
         _hashtagcolor = [UIColor blackColor];
         _nametagcolor = [UIColor redColor];
         _find_asign = NO;
@@ -98,6 +101,11 @@
  
  ********************/
 
+-(NSMutableArray*)gethashtagrange
+{
+    return _hashtagrange;
+}
+
 
 //把Tag標示出來
 -(void)refreshHasgTagColor{
@@ -109,6 +117,7 @@
     [self removeAttribute:NSForegroundColorAttributeName range:paragaphRange];
     [self removeAttribute:NSUnderlineStyleAttributeName range:paragaphRange];
     [self removeAttribute:NSBackgroundColorAttributeName range:paragaphRange];
+
     }
     
      /*   HighLightTag    */
@@ -120,13 +129,18 @@
      /*   HighLightTag    */
 -(void)highlightTag:(NSRange)paragaphRange{
     
+    [_hashtagrange removeAllObjects]; //清空
+    
     static NSRegularExpression *expression;
-    NSString *_highlightpattern = @"(\\s#)(\\w)*(\\s|!|%)";
+    NSString *_highlightpattern = @"(\\s#)(\\S)*(\\s|!|%|@)";
     /* 其次遍历所有的样式匹配项并高亮它们： */
     expression = [NSRegularExpression regularExpressionWithPattern:_highlightpattern options:0 error:NULL];
     [expression enumerateMatchesInString:self.string options:0 range:paragaphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        [_hashtagrange addObject:[NSValue valueWithRange:result.range]];
+
         NSRange _HashRange = NSMakeRange(result.range.location+1, result.range.length-1);
         [self addAttribute:NSForegroundColorAttributeName value:_hashtagcolor range:_HashRange];
+        
     }];
 }
 
