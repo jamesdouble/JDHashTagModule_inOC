@@ -98,7 +98,6 @@
                     /*  有選擇Tag  */
                     NSRange replacerange = NSMakeRange(_cusor + _indexofhash+1,input.length - 1 - (_indexofhash + _cusor));
                     _replaced = [input stringByReplacingCharactersInRange:replacerange withString:replacestr];
-                    //NSLog(@"replace %@",_replaced);
                 }
                 else{
                     /* 系統推薦Tag */

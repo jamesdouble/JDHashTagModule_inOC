@@ -14,6 +14,8 @@
 @interface HashTagHighlight : NSTextStorage
 
 - (void)setString:(NSString*)change;
+-(void)setNameColor:(UIColor*)color;
+-(void)setTagColor:(UIColor*)color;
 
 @end
 

@@ -13,7 +13,20 @@
     NSMutableAttributedString *_backingStore;
     NSLayoutManager *_layoutmanager;
     NSMutableArray *_name_arr;
+    NSRange _asignrange;
+    UIColor *_hashtagcolor;
+    UIColor *_nametagcolor;
+    BOOL _find_asign;
 }
+
+
+/******************
+ 
+ 
+ NSTextStorage inheritance~
+ 
+ 
+ ********************/
 
 - (instancetype)init
 {
@@ -21,6 +34,9 @@
     if (self) {
         _backingStore = [NSMutableAttributedString new];
         _name_arr = [[NSMutableArray alloc]init];
+        _hashtagcolor = [UIColor blackColor];
+        _nametagcolor = [UIColor redColor];
+        _find_asign = NO;
     }
     return self;
 }
@@ -58,6 +74,30 @@
     [self endEditing];
 }
 
+/******************
+ 
+ 
+ color setting ~
+ 
+ 
+ ********************/
+
+-(void)setNameColor:(UIColor*)color{
+    _nametagcolor = color;
+}
+
+-(void)setTagColor:(UIColor*)color{
+    _hashtagcolor = color;
+}
+
+/******************
+ 
+ 
+ Detect Module~
+ 
+ 
+ ********************/
+
 
 //把Tag標示出來
 -(void)refreshHasgTagColor{
@@ -86,20 +126,22 @@
     expression = [NSRegularExpression regularExpressionWithPattern:_highlightpattern options:0 error:NULL];
     [expression enumerateMatchesInString:self.string options:0 range:paragaphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         NSRange _HashRange = NSMakeRange(result.range.location+1, result.range.length-1);
-        [self addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:_HashRange];
+        [self addAttribute:NSForegroundColorAttributeName value:_hashtagcolor range:_HashRange];
     }];
 }
 
 
 /*   HighLightUser    */
 -(void)highlightUser:(NSRange)paragaphRange{
+    _asignrange = NSMakeRange(0, 0);
+    _find_asign = NO;
+    
     
     if(![[self string] containsString:@"@"]) 
     {
         return;
     }
-    
-    static NSRegularExpression *expression;
+       static NSRegularExpression *expression;
     NSString *_highlightnamePattern = @"(\\s@)(\\w)*(\\s)";
     expression = [NSRegularExpression regularExpressionWithPattern:_highlightnamePattern options:0 error:NULL];
     
@@ -111,8 +153,11 @@
         {
         [_name_arr addObject:_highlighted];
         }
+
+        _asignrange = NSMakeRange(match.range.location+1,1);
+        _find_asign = YES;
     }
-    
+
     NSString* _namepattern = @"";
     for (_namepattern in _name_arr)
     {
@@ -122,12 +167,11 @@
         }];
         
     }
-
-   
+    
 }
 
 
-/* 
+/*
  This method is automatically invoked in response to an edited(_:range:changeInLength:) message or an endEditing() message if edits were made within the scope of a beginEditing() block. You should never need to invoke it directly.
  
  */
@@ -136,6 +180,11 @@
 {
     [super processEditing];
     [self refreshHasgTagColor];
+}
+
+-(void)endEditing{
+    [super endEditing];
+    
 }
 
 

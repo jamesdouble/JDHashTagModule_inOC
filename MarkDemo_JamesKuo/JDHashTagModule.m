@@ -52,6 +52,11 @@
     return self;
 }
 
+-(void)setHashTagColor:(UIColor *)color{
+    [_hashtaghigh setTagColor:color];
+}
+
+
 
 
 /**
