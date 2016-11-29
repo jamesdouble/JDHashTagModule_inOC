@@ -2,8 +2,8 @@
 //  HashTagModel.m
 //  MarkDemo_JamesKuo
 //
-//  Created by waninuser on 2016/11/4.
-//  Copyright © 2016年 waninuser. All rights reserved.
+//  Created by JamesDouble on 2016/11/4.
+//  Copyright © 2016年 JamesDouble. All rights reserved.
 //
 
 #import "HashTagModel.h"
@@ -17,6 +17,7 @@
 @implementation HashTagModel
 {
  NSMutableArray *_dictionaryresultTag;
+ NSMutableArray *_expandDictionary;
  NSArray *_tagstart;
  NSArray *_tagend;
  UITextChecker *_textChecker;
@@ -31,10 +32,20 @@
         _tagend = [NSArray arrayWithObjects:@"!",@"@",@"%",@" ", nil];
         _textChecker = [[UITextChecker alloc] init];
         _dictionaryresultTag = [[NSMutableArray alloc] init];
+        _expandDictionary = [[NSMutableArray alloc]init];
     }
     return self;
 }
 
+-(void)addExpand:(NSString*)input
+{
+    if([_expandDictionary containsObject:input])
+    {
+        return;
+    }
+    
+    [_expandDictionary addObject:input];
+}
 
 -(void)analyzeText:(NSString*)input change:(NSString*)replacestr{
     [self analyzeTag:input change:replacestr];
@@ -126,7 +137,7 @@
     /*     搜尋字典     */
     NSString *_checkingString = [input substringFromIndex:1];
     NSArray *_checkingArray = [_textChecker completionsForPartialWordRange:NSMakeRange(0, _checkingString.length) inString:_checkingString language:@"en"];
-
+  
     /*     插入＃      */
     for(int i =0;i<_checkingArray.count;i+=1)
     {
@@ -134,6 +145,18 @@
         [_str insertString:@"#" atIndex:0];
         [_dictionaryresultTag addObject:_str];
     }
+    
+    for(int j=0;j<_expandDictionary.count;j+=1)
+    {
+        NSMutableString *_str = [NSMutableString stringWithString:_expandDictionary[j]];
+        if([_str hasPrefix:_checkingString])
+        {
+        [_str insertString:@"#" atIndex:0];
+        [_dictionaryresultTag addObject:_str];
+        }
+    }
+
+    
     [self callDelegate];
 }
 

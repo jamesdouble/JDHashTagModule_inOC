@@ -2,8 +2,8 @@
 //  MarkDemo_JamesKuoTests.m
 //  MarkDemo_JamesKuoTests
 //
-//  Created by waninuser on 2016/11/4.
-//  Copyright © 2016年 waninuser. All rights reserved.
+//  Created by JamesDouble on 2016/11/4.
+//  Copyright © 2016年 JamesDouble. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

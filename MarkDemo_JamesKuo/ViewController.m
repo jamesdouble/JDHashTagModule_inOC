@@ -2,8 +2,8 @@
 //  ViewController.m
 //  MarkDemo_JamesKuo
 //
-//  Created by waninuser on 2016/11/4.
-//  Copyright © 2016年 waninuser. All rights reserved.
+//  Created by JamesDouble on 2016/11/4.
+//  Copyright © 2016年 JamesDouble. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -28,6 +28,8 @@
     [super viewDidLoad];
     hashtagmodel = [[JDHashTagModule alloc] initWithTable_Text:__tableview txt:__textview];
     hashtagmodel.delegate = self;
+    [hashtagmodel addToDictionary:@"JamesDouble"];
+    [hashtagmodel addArrayToDictionary:@[@"HashTag",@"GitHub"]];
     colorarr = [[NSArray alloc] initWithObjects:[UIColor greenColor],[UIColor redColor],[UIColor blueColor],[UIColor yellowColor], nil];
     tagcount = 0;
     namecount = 0;

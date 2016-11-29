@@ -2,8 +2,8 @@
 //  JDHashTagModule.m
 //  MarkDemo_JamesKuo
 //
-//  Created by waninuser on 2016/11/15.
-//  Copyright © 2016年 waninuser. All rights reserved.
+//  Created by JamesDouble on 2016/11/15.
+//  Copyright © 2016年 JamesDouble. All rights reserved.
 //
 
 #import "JDHashTagModule.h"
@@ -88,6 +88,25 @@
         else{
             _tableview.hidden = NO;
         }
+    }
+}
+
+/**
+
+ HashTagModel
+ 
+ **/
+
+-(void)addToDictionary:(NSString*)input
+{
+    [_hashtagmodel addExpand:input];
+}
+
+-(void)addArrayToDictionary:(NSArray *)inputs
+{
+    NSString* input = @"";
+    for (input in inputs) {
+         [_hashtagmodel addExpand:input];
     }
 }
 
