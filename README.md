@@ -83,4 +83,4 @@ Also, you could Implements the delegate, then you will receive notify when User 
 ```
 
 ![Alt text](/../master/Readme_img/delegate_test.gif?raw=true "")
->>>>>>> 6787c430d8022760ffef10bbb4f705d9486fa5b4
+
