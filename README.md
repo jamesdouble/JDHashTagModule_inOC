@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-新人訓專案
-=======
+
 # JDHashTagModule(ObjectiveC)
 
 ***
