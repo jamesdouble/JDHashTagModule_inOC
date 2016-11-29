@@ -81,6 +81,13 @@
     if(_tableview != nil)
     {
         [_tableview reloadData];
+       if( [_hashtagmodel getResult].count == 0)
+        {
+            _tableview.hidden = YES;
+        }
+        else{
+            _tableview.hidden = NO;
+        }
     }
 }
 

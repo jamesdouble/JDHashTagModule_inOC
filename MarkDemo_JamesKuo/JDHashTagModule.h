@@ -21,5 +21,7 @@
 
 @property id<JDHashTagModuleDelegate> delegate;
 -(instancetype)initWithTable_Text:(UITableView *)table txt:(UITextView *)textview;
+-(void)setHashTagColor:(UIColor *)color;
+-(void)setNameTagColor:(UIColor *)color;
 
 @end

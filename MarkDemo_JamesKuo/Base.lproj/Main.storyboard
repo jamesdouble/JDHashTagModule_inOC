@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,17 +30,37 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDx-pH-H6e">
+                                <state key="normal" title="Change Tag Color"/>
+                                <connections>
+                                    <action selector="changeTagColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ltp-Hf-0bi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHZ-Wd-B7l">
+                                <state key="normal" title="Change NameColor"/>
+                                <connections>
+                                    <action selector="changeNameColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sos-KZ-st6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="20G-FH-LDa"/>
+                            <constraint firstItem="T24-2P-fht" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4W3-sT-wRT"/>
+                            <constraint firstItem="ZDx-pH-H6e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9xK-9L-AAi"/>
                             <constraint firstItem="T24-2P-fht" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AUe-Tk-A6x"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="T24-2P-fht" secondAttribute="bottom" constant="8" symbolic="YES" id="IFJ-Pw-Jpj"/>
+                            <constraint firstItem="ZDx-pH-H6e" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="G1F-cG-Zu9"/>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="bottom" secondItem="T24-2P-fht" secondAttribute="top" constant="-10" id="Iwl-GM-bpc"/>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="JnR-fn-tyf"/>
+                            <constraint firstItem="wHZ-Wd-B7l" firstAttribute="height" secondItem="ZDx-pH-H6e" secondAttribute="height" id="RtO-lC-EcL"/>
                             <constraint firstItem="INQ-Kg-Cnx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TbZ-wX-yxn"/>
-                            <constraint firstItem="T24-2P-fht" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="a8Y-Ky-lJ9"/>
+                            <constraint firstItem="T24-2P-fht" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.4" id="a8Y-Ky-lJ9"/>
+                            <constraint firstItem="ZDx-pH-H6e" firstAttribute="top" secondItem="T24-2P-fht" secondAttribute="bottom" id="etV-5d-Vtz"/>
+                            <constraint firstItem="wHZ-Wd-B7l" firstAttribute="width" secondItem="ZDx-pH-H6e" secondAttribute="width" id="f2o-LH-QD6"/>
+                            <constraint firstItem="wHZ-Wd-B7l" firstAttribute="leading" secondItem="ZDx-pH-H6e" secondAttribute="trailing" id="lvd-R7-H2O"/>
                             <constraint firstItem="T24-2P-fht" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="nvy-sY-vmt"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDx-pH-H6e" secondAttribute="bottom" constant="8" symbolic="YES" id="nyC-xr-SnU"/>
+                            <constraint firstItem="wHZ-Wd-B7l" firstAttribute="centerY" secondItem="ZDx-pH-H6e" secondAttribute="centerY" id="pft-ae-KBm"/>
                         </constraints>
                     </view>
                     <connections>

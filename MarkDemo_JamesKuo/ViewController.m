@@ -19,13 +19,19 @@
 @implementation ViewController
 {
     JDHashTagModule *hashtagmodel;
+    NSArray *colorarr;
+    int tagcount;
+    int namecount;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     hashtagmodel = [[JDHashTagModule alloc] initWithTable_Text:__tableview txt:__textview];
     hashtagmodel.delegate = self;
-}
+    colorarr = [[NSArray alloc] initWithObjects:[UIColor greenColor],[UIColor redColor],[UIColor blueColor],[UIColor yellowColor], nil];
+    tagcount = 0;
+    namecount = 0;
+};
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
@@ -44,10 +50,33 @@
                          {
                              //Do some thing here
                              [_alert dismissViewControllerAnimated:YES completion:nil];
-                             
                          }];
     [_alert addAction:ok];
     [self presentViewController:_alert animated:YES completion:nil];
+}
+
+- (IBAction)changeTagColor:(id)sender {
+    [hashtagmodel setHashTagColor:colorarr[tagcount]];
+    if(tagcount +1 == colorarr.count)
+    {
+        tagcount = 0;
+    }
+    else
+    {
+        tagcount += 1;
+    }
+}
+
+- (IBAction)changeNameColor:(id)sender {
+    [hashtagmodel setNameTagColor:colorarr[namecount]];
+    if(namecount +1 == colorarr.count)
+    {
+        namecount = 0;
+    }
+    else
+    {
+        namecount += 1;
+    }
 }
 
 

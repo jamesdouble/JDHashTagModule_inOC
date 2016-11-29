@@ -87,10 +87,12 @@
 
 -(void)setNameColor:(UIColor*)color{
     _nametagcolor = color;
+    [self refreshHasgTagColor];
 }
 
 -(void)setTagColor:(UIColor*)color{
     _hashtagcolor = color;
+    [self refreshHasgTagColor];
 }
 
 /******************
@@ -150,13 +152,8 @@
     _asignrange = NSMakeRange(0, 0);
     _find_asign = NO;
     
-    
-    if(![[self string] containsString:@"@"]) 
-    {
-        return;
-    }
-       static NSRegularExpression *expression;
-    NSString *_highlightnamePattern = @"(\\s@)(\\w)*(\\s)";
+    static NSRegularExpression *expression;
+    NSString *_highlightnamePattern = @"(\\s@)(\\S)*(\\s)";
     expression = [NSRegularExpression regularExpressionWithPattern:_highlightnamePattern options:0 error:NULL];
     
     NSArray *matches = [expression matchesInString:self.string options:0 range:paragaphRange];
@@ -171,16 +168,24 @@
         _asignrange = NSMakeRange(match.range.location+1,1);
         _find_asign = YES;
     }
+    
+    if(_find_asign)
+    {
+        _find_asign = NO;
+        [self setString:[[self string] stringByReplacingCharactersInRange:_asignrange withString:@" "]];
+    }
 
     NSString* _namepattern = @"";
     for (_namepattern in _name_arr)
     {
         expression = [NSRegularExpression regularExpressionWithPattern:_namepattern options:0 error:NULL];
         [expression enumerateMatchesInString:self.string options:0 range:paragaphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-             [self addAttribute:NSBackgroundColorAttributeName value:[UIColor colorWithRed:207.0f/255.0f green:226.0f/255.0f blue:243.0f/255.0f alpha:1.0] range:result.range];
+            UIColor *a_color = [_nametagcolor colorWithAlphaComponent:0.7];
+            [self addAttribute:NSBackgroundColorAttributeName value:a_color range:result.range];
         }];
         
     }
+    
     
 }
 
@@ -194,6 +199,8 @@
 {
     [super processEditing];
     [self refreshHasgTagColor];
+   
+
 }
 
 -(void)endEditing{
