@@ -33,11 +33,14 @@
     colorarr = [[NSArray alloc] initWithObjects:[UIColor greenColor],[UIColor redColor],[UIColor blueColor],[UIColor yellowColor], nil];
     tagcount = 0;
     namecount = 0;
+    
 };
+
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self setEditing:NO];
+    [self.view endEditing:YES];
 }
 
 -(void)hastapHashTag:(NSString*)tag

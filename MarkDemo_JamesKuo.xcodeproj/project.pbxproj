@@ -254,6 +254,7 @@
 				TargetAttributes = {
 					6B30C9C71DCC2B83008EA63E = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 857SMZQ3R8;
 						ProvisioningStyle = Automatic;
 					};
 					6B30C9E01DCC2B84008EA63E = {
@@ -476,8 +477,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 857SMZQ3R8;
+				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MarkDemo_JamesKuo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "-ferror-limit=0";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MarkDemo-JamesKuo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -487,8 +491,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 857SMZQ3R8;
+				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = MarkDemo_JamesKuo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "-ferror-limit=0";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MarkDemo-JamesKuo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

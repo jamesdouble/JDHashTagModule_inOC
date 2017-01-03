@@ -44,6 +44,7 @@
         
         _tableview.delegate = self;
         _tableview.dataSource = self;
+        _tableview.hidden = YES;
         _tableview.transform = CGAffineTransformMakeRotation(-M_PI);
         
         
@@ -54,6 +55,9 @@
         [_hashtaghigh addLayoutManager: self->_textview.layoutManager];
         [_hashtaghigh replaceCharactersInRange:NSMakeRange(0, 0) withString:@"  "];
         [self setHashTagColor:[UIColor redColor]];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
         
     }
     return self;
@@ -116,6 +120,31 @@
  TextView Delegate
  
  **/
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    // Assign new frame to your view
+   // [self.view setFrame:CGRectMake(0,-110,320,460)]; //here taken -110 for example i.e. your view will be scrolled to -110. change its value according to your requirement.
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    CGRect textviewNewFrame = CGRectMake(_textview.frame.origin.x, _textview.frame.origin.y - keyboardFrameBeginRect.size.height , _textview.frame.size.width, _textview.frame.size.height);
+    _textview.frame = textviewNewFrame;
+
+    NSLog(@"%s",__FUNCTION__);
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+     CGRect textviewNewFrame = CGRectMake(_textview.frame.origin.x, _textview.frame.origin.y + keyboardFrameBeginRect.size.height , _textview.frame.size.width, _textview.frame.size.height);
+    _textview.frame = textviewNewFrame;
+
+    NSLog(@"%s",__FUNCTION__);
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     NSLog(@"%s",__FUNCTION__);
